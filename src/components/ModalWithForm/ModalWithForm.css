@@ -8,6 +8,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  /* WARNING: this is a temporary fix to hide the modal */
+  visibility: hidden;
 }
 
 .modal__container {

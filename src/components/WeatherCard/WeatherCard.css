@@ -1,14 +1,1 @@
-.item__card-container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
 
-.item__card {
-  max-width: 328px;
-  max-height: 328px;
-}
-
-.item__card-image {
-  object-fit: cover;
-}
