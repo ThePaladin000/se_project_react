@@ -7,10 +7,11 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import ItemModal from "../ItemModal/ItemModal";
 
 function App() {
+  const temp = 78;
   return (
     <>
-      <Header />
-      <Main />
+      <Header temp={temp} />
+      <Main temp={temp} />
       <Footer />
       <ModalWithForm />
       <ItemModal />
