@@ -6,9 +6,11 @@ import Footer from "../Footer/Footer";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import ItemModal from "../ItemModal/ItemModal";
 import { GarmentChildren } from "../Forms/GarmentChildren";
+import { handleCloseModal } from "../../utils/utils";
 
 function App() {
   const temp = 78;
+
   return (
     <>
       <Header temp={temp} />
@@ -18,6 +20,7 @@ function App() {
         title="New garment"
         name="garment"
         buttonText="Add garment"
+        onClose={handleCloseModal}
       >
         {GarmentChildren}
       </ModalWithForm>
