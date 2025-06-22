@@ -5,6 +5,7 @@ import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import ItemModal from "../ItemModal/ItemModal";
+import { GarmentChildren } from "../Forms/GarmentChildren";
 
 function App() {
   const temp = 78;
@@ -13,7 +14,13 @@ function App() {
       <Header temp={temp} />
       <Main temp={temp} />
       <Footer />
-      <ModalWithForm />
+      <ModalWithForm
+        title="New garment"
+        name="garment"
+        buttonText="Add garment"
+      >
+        {GarmentChildren}
+      </ModalWithForm>
       <ItemModal />
     </>
   );
