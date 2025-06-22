@@ -13,3 +13,11 @@ export const handleEscClose = (e, onClose) => {
     onClose();
   }
 };
+
+export const handleCardClick = (card, setSelectedCard) => {
+  setSelectedCard(card);
+};
+
+export const handleCloseItemModal = (setSelectedCard) => {
+  setSelectedCard(null);
+};
