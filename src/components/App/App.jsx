@@ -37,7 +37,6 @@ function App() {
         title="New garment"
         name="garment"
         buttonText="Add garment"
-        onClose={() => handleCloseItemModal(setSelectedCard)}
       >
         {GarmentChildren}
       </ModalWithForm>

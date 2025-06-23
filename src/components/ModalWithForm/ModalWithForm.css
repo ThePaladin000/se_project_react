@@ -31,11 +31,9 @@
   background: transparent;
   border: none;
   cursor: pointer;
-  background-image: url("../../assets/close-icon.svg");
-  background-size: contain;
-  background-repeat: no-repeat;
   width: 20px;
   height: 20px;
+  background-color: transparent;
 }
 
 .modal__title {

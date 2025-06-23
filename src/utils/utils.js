@@ -9,12 +9,6 @@ export const handleOverlayClick = (e, onClose) => {
   }
 };
 
-export const handleEscClose = (e, onClose) => {
-  if (e.key === "Escape") {
-    onClose();
-  }
-};
-
 export const handleCardClick = (card, setSelectedCard) => {
   setSelectedCard(card);
 };

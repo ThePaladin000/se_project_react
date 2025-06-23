@@ -1,32 +1,35 @@
 import { useEffect } from "react";
 import "./ModalWithForm.css";
-import {
-  handleEscClose,
-  handleOverlayClick,
-  toggleModal,
-} from "../../utils/utils";
+import { toggleModal } from "../../utils/utils";
+import closeIcon from "../../assets/close.svg";
 
-function ModalWithForm({ children, title, name, buttonText, onClose }) {
+function ModalWithForm({ children, title, name, buttonText }) {
   useEffect(() => {
-    const escListener = (e) => handleEscClose(e, onClose);
+    const escListener = (e) => {
+      if (
+        e.key === "Escape" &&
+        document.querySelector(".modal.modal__visible")
+      ) {
+        toggleModal();
+      }
+    };
     document.addEventListener("keydown", escListener);
 
     return () => {
       document.removeEventListener("keydown", escListener);
     };
-  }, [onClose]);
+  }, []);
 
   return (
-    <div
-      className={`modal modal_type_${name}`}
-      onClick={(e) => handleOverlayClick(e, onClose)}
-    >
-      <div className="modal__container">
+    <div className={`modal modal_type_${name}`} onClick={() => toggleModal()}>
+      <div className="modal__container" onClick={(e) => e.stopPropagation()}>
         <button
           type="button"
           className="modal__close"
           onClick={() => toggleModal()}
-        ></button>
+        >
+          <img src={closeIcon} alt="close" />
+        </button>
         <h2 className="modal__title">{title}</h2>
         <form className="modal__form" name={name}>
           {children}
