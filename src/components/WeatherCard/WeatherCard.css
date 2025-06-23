@@ -1,1 +1,7 @@
-
+.weather__temperature {
+  position: absolute;
+  color: rgba(255, 255, 255, 1);
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 40px;
+}
