@@ -1,18 +1,27 @@
-const API_KEY = "be6c27ab3eee0751973bcb95c367d1e7";
+import { API_KEY } from "./constants";
+import { getTimeOfDay } from "./utils";
 
 export const getWeather = async (location) => {
   const response = await fetch(
     `https://api.openweathermap.org/data/3.0/onecall?lat=${location.latitude}&lon=${location.longitude}&units=imperial&appid=${API_KEY}`
   );
   const data = await response.json();
-  console.log(data);
+
+  const weatherString = data.current.weather[0].main;
+  const weather = weatherString.toLowerCase();
+
+  const sunrise = data.current.sunrise;
+  const sunset = data.current.sunset;
+  const timeOfDay = getTimeOfDay(sunrise, sunset);
 
   const temp = Math.round(data.current.temp);
-  const weather = temp >= 86 ? "hot" : temp >= 66 ? "warm" : "cold";
+  const heatLevel = temp >= 86 ? "hot" : temp >= 66 ? "warm" : "cold";
 
   const weatherData = {
     temp: temp,
+    heatLevel: heatLevel,
     weather: weather,
+    timeOfDay: timeOfDay,
   };
 
   return weatherData;
