@@ -1,14 +1,3 @@
-.item__cards {
-  display: flex;
-  gap: 10px;
-}
-
-.item__cards-container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-
 .item__card {
   max-width: 325px;
   max-height: 328px;
