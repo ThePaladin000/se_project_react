@@ -1,6 +1,10 @@
 import { useEffect } from "react";
 import "./ModalWithForm.css";
-import { handleEscClose, handleOverlayClick } from "../../utils/utils";
+import {
+  handleEscClose,
+  handleOverlayClick,
+  toggleModal,
+} from "../../utils/utils";
 
 function ModalWithForm({ children, title, name, buttonText, onClose }) {
   useEffect(() => {
@@ -21,7 +25,7 @@ function ModalWithForm({ children, title, name, buttonText, onClose }) {
         <button
           type="button"
           className="modal__close"
-          onClick={onClose}
+          onClick={() => toggleModal()}
         ></button>
         <h2 className="modal__title">{title}</h2>
         <form className="modal__form" name={name}>

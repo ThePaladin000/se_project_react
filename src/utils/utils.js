@@ -1,5 +1,6 @@
-export const handleCloseModal = () => {
-  console.log("modal close button clicked");
+export const toggleModal = () => {
+  const modal = document.querySelector(".modal");
+  modal.classList.toggle("modal__visible");
 };
 
 export const handleOverlayClick = (e, onClose) => {

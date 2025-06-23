@@ -1,6 +1,7 @@
 import logo from "../../assets/logo.svg";
 import profile from "../../assets/profile.svg";
 import "./Header.css";
+import { toggleModal } from "../../utils/utils";
 
 const currentDate = new Date().toLocaleString("default", {
   month: "long",
@@ -22,7 +23,12 @@ function Header() {
         </div>
         <div className="header__profile">
           <button className="header__profile-button">
-            <p className="header__profile-button-text">+ Add Clothes</p>
+            <p
+              className="header__profile-button-text"
+              onClick={() => toggleModal()}
+            >
+              + Add Clothes
+            </p>
           </button>
           <p className="header__profile-name">John Doe</p>
           <img src={profile} alt="profile" className="header__profile-icon" />
