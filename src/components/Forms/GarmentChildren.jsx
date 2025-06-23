@@ -9,6 +9,7 @@ export const GarmentChildren = (
         placeholder="Name"
       />
     </label>
+    <span className="modal__span"></span>
     <label className="modal__label">
       Image
       <input
@@ -21,22 +22,44 @@ export const GarmentChildren = (
     <p className="modal__radio-title">Select the weather type:</p>
     <div className="modal__radio-buttons">
       <div className="modal__radio-option">
-        <input
-          type="radio"
-          id="hot"
-          value="hot"
-          name="weather"
-          defaultChecked
-        />
-        <label htmlFor="hot">Hot</label>
+        <label className="modal__radio-label">
+          <input
+            type="radio"
+            id="hot"
+            value="hot"
+            name="weather"
+            defaultChecked
+            className="modal__radio-input"
+          />
+          <span className="modal__custom-radio"></span>
+          Hot
+        </label>
       </div>
       <div className="modal__radio-option">
-        <input type="radio" id="warm" value="warm" name="weather" />
-        <label htmlFor="warm">Warm</label>
+        <label className="modal__radio-label">
+          <input
+            type="radio"
+            id="warm"
+            value="warm"
+            name="weather"
+            className="modal__radio-input"
+          />
+          <span className="modal__custom-radio"></span>
+          Warm
+        </label>
       </div>
       <div className="modal__radio-option">
-        <input type="radio" id="cold" value="cold" name="weather" />
-        <label htmlFor="cold">Cold</label>
+        <label className="modal__radio-label">
+          <input
+            type="radio"
+            id="cold"
+            value="cold"
+            name="weather"
+            className="modal__radio-input"
+          />
+          <span className="modal__custom-radio"></span>
+          Cold
+        </label>
       </div>
     </div>
   </>

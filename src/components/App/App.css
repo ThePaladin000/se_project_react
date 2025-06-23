@@ -8,3 +8,18 @@
   color: black;
   background-color: rgba(243, 243, 243, 1);
 }
+
+@font-face {
+  font-family: "CabinetGrotesk";
+  src: url("../../assets/CabinetGrotesk-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "CabinetGrotesk";
+  src: url("../../assets/CabinetGrotesk-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}

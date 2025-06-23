@@ -6,6 +6,11 @@
   max-height: 40px;
   margin: 0;
   padding-bottom: 28px;
+  font-family: "CabinetGrotesk", Arial, sans-serif;
+}
+
+.header__logo {
+  margin-bottom: 4px;
 }
 
 .header__info {
@@ -30,6 +35,15 @@
 
 .header__profile-button {
   background-color: transparent;
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.header__profile-button:hover {
+  border: none;
+  outline: none;
+  box-shadow: none;
 }
 
 .header__profile-button-text {
