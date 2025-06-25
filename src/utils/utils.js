@@ -1,8 +1,3 @@
-export const toggleModal = () => {
-  const modal = document.querySelector(".modal");
-  modal.classList.toggle("modal__visible");
-};
-
 export const handleOverlayClick = (e, onClose) => {
   if (e.target === e.currentTarget) {
     onClose();

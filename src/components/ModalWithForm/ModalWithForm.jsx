@@ -1,33 +1,19 @@
-import { useEffect } from "react";
+import useModalClose from "../../hooks/useModalClose";
 import "./ModalWithForm.css";
-import { toggleModal } from "../../utils/utils";
 import closeIcon from "../../assets/close.svg";
 
-function ModalWithForm({ children, title, name, buttonText }) {
-  useEffect(() => {
-    const escListener = (e) => {
-      if (
-        e.key === "Escape" &&
-        document.querySelector(".modal.modal__visible")
-      ) {
-        toggleModal();
-      }
-    };
-    document.addEventListener("keydown", escListener);
-
-    return () => {
-      document.removeEventListener("keydown", escListener);
-    };
-  }, []);
+function ModalWithForm({ children, title, name, buttonText, onClose, isOpen }) {
+  useModalClose(isOpen, onClose);
 
   return (
-    <div className={`modal modal_type_${name}`} onClick={() => toggleModal()}>
+    <div
+      className={`modal modal_type_${name}${isOpen ? " modal__visible" : ""}`}
+      onClick={isOpen ? onClose : undefined}
+      role="dialog"
+      aria-modal="true"
+    >
       <div className="modal__container" onClick={(e) => e.stopPropagation()}>
-        <button
-          type="button"
-          className="modal__close"
-          onClick={() => toggleModal()}
-        >
+        <button type="button" className="modal__close" onClick={onClose}>
           <img src={closeIcon} alt="close" />
         </button>
         <h2 className="modal__title">{title}</h2>
