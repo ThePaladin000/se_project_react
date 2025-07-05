@@ -11,8 +11,6 @@ const ToggleSwitch = () => {
     handleToggleSwitch();
   };
 
-  console.log(currentTemperatureUnit);
-
   return (
     <label className="toggle-switch">
       <input

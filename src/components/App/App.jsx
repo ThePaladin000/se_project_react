@@ -11,7 +11,16 @@ import { defaultClothingItems, location } from "../../utils/constants";
 import { getWeather } from "../../utils/weatherApi";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 
+const placeholderWeather = {
+  temp: { F: "--", C: "--" },
+  heatLevel: "",
+  weather: "",
+  timeOfDay: "",
+  city: "Loading...",
+};
+
 function App() {
+  const [weatherIsLoading, setWeatherIsLoading] = useState(true);
   const [selectedCard, setSelectedCard] = useState(null);
   const [weather, setWeather] = useState({});
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
@@ -24,6 +33,7 @@ function App() {
     getWeather(location)
       .then((weather) => {
         setWeather(weather);
+        setWeatherIsLoading(false);
       })
       .catch((err) => {
         console.error(err);
@@ -35,10 +45,12 @@ function App() {
       <CurrentTemperatureUnitContext.Provider
         value={{ currentTemperatureUnit, handleToggleSwitch }}
       >
-        <Header />
+        <Header
+          city={weatherIsLoading ? placeholderWeather.city : weather.city}
+        />
         <Main
           items={defaultClothingItems}
-          weather={weather}
+          weather={weatherIsLoading ? placeholderWeather : weather}
           onCardClick={(card) => handleCardClick(card, setSelectedCard)}
         />
         <Footer />

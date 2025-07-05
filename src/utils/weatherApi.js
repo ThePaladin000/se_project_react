@@ -14,14 +14,22 @@ export const getWeather = async (location) => {
   const sunset = data.current.sunset;
   const timeOfDay = getTimeOfDay(sunrise, sunset);
 
-  const temp = Math.round(data.current.temp);
-  const heatLevel = temp >= 86 ? "hot" : temp >= 66 ? "warm" : "cold";
+  const heatLevel =
+    data.current.temp >= 86 ? "hot" : data.current.temp >= 66 ? "warm" : "cold";
+
+  const temp = {
+    F: Math.round(data.current.temp),
+    C: Math.round(((data.current.temp - 32) * 5) / 9),
+  };
+
+  const city = data.timezone.split("/").pop().replace(/_/g, " ");
 
   const weatherData = {
     temp: temp,
     heatLevel: heatLevel,
     weather: weather,
     timeOfDay: timeOfDay,
+    city: city,
   };
 
   return weatherData;

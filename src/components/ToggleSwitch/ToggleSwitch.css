@@ -5,11 +5,19 @@
   border-radius: 20px;
   cursor: pointer;
   position: relative;
-  overflow: hidden;
+  background: #f6f6f7;
 }
 
 .toggle-switch__checkbox {
   opacity: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 0;
+  z-index: 3;
+  cursor: pointer;
 }
 
 .toggle-switch__slider {
@@ -19,28 +27,55 @@
   position: absolute;
   border-radius: 50%;
   left: 0;
-  transition: all 0.3s;
+  top: 0;
+  z-index: 2;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
 }
 
 .toggle-switch__text {
   color: rgba(126, 126, 126, 1);
   position: absolute;
-  z-index: 1;
+  z-index: 4;
   top: 2px;
+  font-size: 18px;
+  font-family: inherit;
+  width: 20px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  transition: color 0.3s;
+  mix-blend-mode: difference;
 }
 
 .toggle-switch__text_F {
-  left: 9px;
+  left: 5px;
 }
 
 .toggle-switch__text_C {
-  right: 9px;
+  right: 5px;
+}
+
+.toggle-switch__slider {
+  transform: translateX(0);
 }
 
 .toggle-switch__checkbox:checked ~ .toggle-switch__slider {
-  left: 28px;
+  transform: translateX(28px);
+}
+
+.toggle-switch:hover
+  .toggle-switch__slider:not(.toggle-switch__slider_checked) {
+  transform: translateX(2px);
+}
+
+.toggle-switch:hover .toggle-switch__checkbox:checked ~ .toggle-switch__slider {
+  transform: translateX(30px);
 }
 
 .toggle-switch__text_color_white {
   color: white;
+  mix-blend-mode: normal;
 }

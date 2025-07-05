@@ -11,10 +11,7 @@ const currentDate = new Date().toLocaleString("default", {
   day: "numeric",
 });
 
-// TODO: get city from API
-const city = "New York";
-
-function Header() {
+function Header({ city }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleOpenModal = () => setIsModalOpen(true);
