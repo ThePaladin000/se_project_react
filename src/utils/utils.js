@@ -1,9 +1,3 @@
-export const handleOverlayClick = (e, onClose) => {
-  if (e.target === e.currentTarget) {
-    onClose();
-  }
-};
-
 export const handleCardClick = (card, setSelectedCard) => {
   setSelectedCard(card);
 };

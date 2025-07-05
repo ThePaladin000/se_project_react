@@ -9,10 +9,16 @@ import { GarmentChildren } from "../Forms/GarmentChildren";
 import { handleCardClick, handleCloseItemModal } from "../../utils/utils";
 import { defaultClothingItems, location } from "../../utils/constants";
 import { getWeather } from "../../utils/weatherApi";
+import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 
 function App() {
   const [selectedCard, setSelectedCard] = useState(null);
   const [weather, setWeather] = useState({});
+  const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
+
+  const handleToggleSwitch = () => {
+    setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
+  };
 
   useEffect(() => {
     getWeather(location)
@@ -26,26 +32,30 @@ function App() {
 
   return (
     <>
-      <Header />
-      <Main
-        items={defaultClothingItems}
-        weather={weather}
-        onCardClick={(card) => handleCardClick(card, setSelectedCard)}
-      />
-      <Footer />
-      <ModalWithForm
-        title="New garment"
-        name="garment"
-        buttonText="Add garment"
+      <CurrentTemperatureUnitContext.Provider
+        value={{ currentTemperatureUnit, handleToggleSwitch }}
       >
-        {GarmentChildren}
-      </ModalWithForm>
-      {selectedCard && (
-        <ItemModal
-          item={selectedCard}
-          onClose={() => handleCloseItemModal(setSelectedCard)}
+        <Header />
+        <Main
+          items={defaultClothingItems}
+          weather={weather}
+          onCardClick={(card) => handleCardClick(card, setSelectedCard)}
         />
-      )}
+        <Footer />
+        <ModalWithForm
+          title="New garment"
+          name="garment"
+          buttonText="Add garment"
+        >
+          {GarmentChildren}
+        </ModalWithForm>
+        {selectedCard && (
+          <ItemModal
+            item={selectedCard}
+            onClose={() => handleCloseItemModal(setSelectedCard)}
+          />
+        )}
+      </CurrentTemperatureUnitContext.Provider>
     </>
   );
 }

@@ -4,6 +4,7 @@ import "./Header.css";
 import { useState } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { GarmentChildren } from "../Forms/GarmentChildren";
+import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 
 const currentDate = new Date().toLocaleString("default", {
   month: "long",
@@ -29,6 +30,7 @@ function Header() {
           </p>
         </div>
         <div className="header__profile">
+          <ToggleSwitch />
           <button className="header__profile-button" onClick={handleOpenModal}>
             <p className="header__profile-button-text">+ Add Clothes</p>
           </button>
