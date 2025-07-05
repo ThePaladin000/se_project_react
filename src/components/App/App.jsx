@@ -3,13 +3,13 @@ import "./App.css";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
-import ModalWithForm from "../ModalWithForm/ModalWithForm";
+import AddItemModal from "../AddItemModal/AddItemModal";
 import ItemModal from "../ItemModal/ItemModal";
-import { GarmentChildren } from "../Forms/GarmentChildren";
 import { handleCardClick, handleCloseItemModal } from "../../utils/utils";
 import { defaultClothingItems, location } from "../../utils/constants";
 import { getWeather } from "../../utils/weatherApi";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
+import { v4 } from "uuid";
 
 const placeholderWeather = {
   temp: { F: "--", C: "--" },
@@ -24,9 +24,16 @@ function App() {
   const [selectedCard, setSelectedCard] = useState(null);
   const [weather, setWeather] = useState({});
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
+  const [isOpen, setIsOpen] = useState(false);
+  const [clothingItems, setClothingItems] = useState(defaultClothingItems);
 
   const handleToggleSwitch = () => {
     setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
+  };
+
+  const handleAddGarment = (item) => {
+    setClothingItems((prev) => [...prev, { ...item, _id: v4() }]);
+    setIsOpen(false);
   };
 
   useEffect(() => {
@@ -47,20 +54,19 @@ function App() {
       >
         <Header
           city={weatherIsLoading ? placeholderWeather.city : weather.city}
+          onAddGarmentClick={() => setIsOpen(true)}
         />
         <Main
-          items={defaultClothingItems}
+          items={clothingItems}
           weather={weatherIsLoading ? placeholderWeather : weather}
           onCardClick={(card) => handleCardClick(card, setSelectedCard)}
         />
         <Footer />
-        <ModalWithForm
-          title="New garment"
-          name="garment"
-          buttonText="Add garment"
-        >
-          {GarmentChildren}
-        </ModalWithForm>
+        <AddItemModal
+          isOpen={isOpen}
+          onClose={() => setIsOpen(false)}
+          onAddGarment={handleAddGarment}
+        />
         {selectedCard && (
           <ItemModal
             item={selectedCard}
