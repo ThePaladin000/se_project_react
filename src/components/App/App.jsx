@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
@@ -10,6 +11,7 @@ import { defaultClothingItems, location } from "../../utils/constants";
 import { getWeather } from "../../utils/weatherApi";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 import { v4 } from "uuid";
+import Profile from "../Profile/Profile";
 
 const placeholderWeather = {
   temp: { F: "--", C: "--" },
@@ -56,11 +58,28 @@ function App() {
           city={weatherIsLoading ? placeholderWeather.city : weather.city}
           onAddGarmentClick={() => setIsOpen(true)}
         />
-        <Main
-          items={clothingItems}
-          weather={weatherIsLoading ? placeholderWeather : weather}
-          onCardClick={(card) => handleCardClick(card, setSelectedCard)}
-        />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Main
+                items={clothingItems}
+                weather={weatherIsLoading ? placeholderWeather : weather}
+                onCardClick={(card) => handleCardClick(card, setSelectedCard)}
+              />
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <Profile
+                onAddGarmentClick={() => setIsOpen(true)}
+                items={clothingItems}
+                onCardClick={(card) => handleCardClick(card, setSelectedCard)}
+              />
+            }
+          />
+        </Routes>
         <Footer />
         <AddItemModal
           isOpen={isOpen}

@@ -2,6 +2,7 @@ import logo from "../../assets/logo.svg";
 import profile from "../../assets/profile.svg";
 import "./Header.css";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
+import { Link } from "react-router-dom";
 
 const currentDate = new Date().toLocaleString("default", {
   month: "long",
@@ -28,8 +29,10 @@ function Header({ city, onAddGarmentClick }) {
               + Add Clothes
             </p>
           </button>
-          <p className="header__profile-name">John Doe</p>
-          <img src={profile} alt="profile" className="header__profile-icon" />
+          <Link to="/profile" className="header__profile-link">
+            <p className="header__profile-name">John Doe</p>
+            <img src={profile} alt="profile" className="header__profile-icon" />
+          </Link>
         </div>
       </nav>
     </header>

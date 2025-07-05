@@ -33,6 +33,14 @@
   align-items: center;
 }
 
+.header__profile-link {
+  text-decoration: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: rgba(0, 0, 0, 1);
+}
+
 .header__profile-button {
   background-color: transparent;
   border: none;
