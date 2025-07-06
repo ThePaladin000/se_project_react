@@ -1,0 +1,103 @@
+.confirm-delete-modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  font-family: "CabinetGrotesk", Arial, sans-serif;
+  z-index: 1001;
+  position: absolute;
+}
+
+.confirm-delete-modal__container {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 670px;
+  height: 280px;
+  border-radius: 20px;
+  padding: 32px;
+  text-align: center;
+  justify-content: center;
+}
+
+.confirm-delete-modal__title {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.confirm-delete-modal__subtitle {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+  margin-bottom: 40px;
+}
+
+.confirm-delete-modal__buttons {
+  display: flex;
+  padding: 0;
+  justify-content: center;
+  flex-direction: column;
+  background-color: transparent;
+}
+
+.confirm-delete-modal__button-confirm {
+  color: rgba(255, 77, 0, 1);
+  background-color: transparent;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 20px;
+  line-height: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+  margin: 0 0 24px 0;
+  font-family: "CabinetGrotesk", Arial, sans-serif;
+}
+
+.confirm-delete-modal__button-cancel {
+  background-color: transparent;
+  color: rgba(0, 0, 0, 1);
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: "CabinetGrotesk", Arial, sans-serif;
+  outline: none;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+.confirm-delete-modal__button-cancel:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.confirm-delete-modal__close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  border: none;
+  width: 20px;
+  height: 20px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  outline: none;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+.confirm-delete-modal__close:focus {
+  outline: none;
+  box-shadow: none;
+}

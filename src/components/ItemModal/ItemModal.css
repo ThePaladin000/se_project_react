@@ -42,6 +42,12 @@
   border-radius: 10px;
 }
 
+.item-modal__content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .item-modal__caption {
   display: flex;
   flex-direction: column;
@@ -61,4 +67,18 @@
 
 .item-modal__caption-weather {
   margin: 0;
+}
+
+.item-modal__button-delete {
+  color: rgba(255, 77, 0, 1);
+  font-family: "CabinetGrotesk", Arial, sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 20px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  cursor: pointer;
+  margin-top: 5px;
 }

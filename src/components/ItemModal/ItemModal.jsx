@@ -1,8 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./ItemModal.css";
 import closeIcon from "../../assets/close.svg";
+import ConfirmDeleteModal from "../ConfirmDeleteModal/ConfirmDeleteModal";
 
-function ItemModal({ item, onClose }) {
+function ItemModal({ item, onClose, onDeleteCard }) {
+  const [isConfirmDeleteOpen, setIsConfirmDeleteOpen] = useState(false);
+
   useEffect(() => {
     const escListener = (e) => {
       if (e.key === "Escape") {
@@ -25,12 +28,40 @@ function ItemModal({ item, onClose }) {
         <button className="item-modal__close" onClick={onClose}>
           <img src={closeIcon} alt="close" />
         </button>
-        <img src={item.link} alt={item.name} className="item-modal__image" />
-        <div className="item-modal__caption">
-          <p className="item-modal__caption-name">{item.name}</p>
-          <p className="item-modal__caption-weather">Weather: {item.weather}</p>
+        <img
+          src={item.imageUrl}
+          alt={item.name}
+          className="item-modal__image"
+        />
+        <div className="item-modal__content">
+          <div className="item-modal__caption">
+            <p className="item-modal__caption-name">{item.name}</p>
+            <p className="item-modal__caption-weather">
+              Weather: {item.weather}
+            </p>
+          </div>
+          <div className="item-modal__button">
+            <button
+              className="item-modal__button-delete"
+              onClick={() => {
+                setIsConfirmDeleteOpen(true);
+              }}
+            >
+              Delete item
+            </button>
+          </div>
         </div>
       </div>
+      {isConfirmDeleteOpen && (
+        <ConfirmDeleteModal
+          item={item}
+          onDeleteCard={(item) => {
+            onDeleteCard(item);
+            setIsConfirmDeleteOpen(false);
+          }}
+          onClose={() => setIsConfirmDeleteOpen(false)}
+        />
+      )}
     </div>
   );
 }

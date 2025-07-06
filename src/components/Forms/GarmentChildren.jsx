@@ -3,8 +3,8 @@ import "./GarmentChildren.css";
 export default function GarmentChildren({
   name,
   setName,
-  link,
-  setLink,
+  imageUrl,
+  setImageUrl,
   weather,
   setWeather,
 }) {
@@ -12,7 +12,7 @@ export default function GarmentChildren({
     setName(e.target.value);
   };
   const handleImageUrlChange = (e) => {
-    setLink(e.target.value);
+    setImageUrl(e.target.value);
   };
   const handleWeatherChange = (e) => {
     setWeather(e.target.value);
@@ -37,10 +37,10 @@ export default function GarmentChildren({
         Image
         <input
           type="url"
-          name="link"
+          name="imageUrl"
           className="modal__input"
           placeholder="Image URL"
-          value={link}
+          value={imageUrl}
           onChange={handleImageUrlChange}
           required
         />

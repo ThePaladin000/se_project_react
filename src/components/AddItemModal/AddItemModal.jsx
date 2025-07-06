@@ -5,14 +5,14 @@ import GarmentChildren from "../Forms/GarmentChildren";
 
 export default function AddItemModal({ isOpen, onClose, onAddGarment }) {
   const [name, setName] = useState("");
-  const [link, setLink] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
   const [weather, setWeather] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onAddGarment({ name, link, weather });
+    onAddGarment({ name, imageUrl, weather });
     setName("");
-    setLink("");
+    setImageUrl("");
     setWeather("");
     onClose();
   };
@@ -29,8 +29,8 @@ export default function AddItemModal({ isOpen, onClose, onAddGarment }) {
       <GarmentChildren
         name={name}
         setName={setName}
-        link={link}
-        setLink={setLink}
+        imageUrl={imageUrl}
+        setImageUrl={setImageUrl}
         weather={weather}
         setWeather={setWeather}
       />

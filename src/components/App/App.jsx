@@ -7,8 +7,9 @@ import Footer from "../Footer/Footer";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import ItemModal from "../ItemModal/ItemModal";
 import { handleCardClick, handleCloseItemModal } from "../../utils/utils";
-import { defaultClothingItems, location } from "../../utils/constants";
 import { getWeather } from "../../utils/weatherApi";
+import { location } from "../../utils/constants";
+import { getItems, postItem, deleteItem } from "../../utils/api";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 import { v4 } from "uuid";
 import Profile from "../Profile/Profile";
@@ -27,15 +28,29 @@ function App() {
   const [weather, setWeather] = useState({});
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
   const [isOpen, setIsOpen] = useState(false);
-  const [clothingItems, setClothingItems] = useState(defaultClothingItems);
+  const [clothingItems, setClothingItems] = useState([]);
 
   const handleToggleSwitch = () => {
     setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
   };
 
   const handleAddGarment = (item) => {
+    postItem(item);
     setClothingItems((prev) => [...prev, { ...item, _id: v4() }]);
     setIsOpen(false);
+  };
+
+  const handleDeleteCard = (card) => {
+    deleteItem(card._id)
+      .then(() => {
+        setClothingItems((prev) =>
+          prev.filter((item) => item._id !== card._id)
+        );
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+    setSelectedCard(null);
   };
 
   useEffect(() => {
@@ -43,6 +58,13 @@ function App() {
       .then((weather) => {
         setWeather(weather);
         setWeatherIsLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+    getItems()
+      .then((items) => {
+        setClothingItems(items);
       })
       .catch((err) => {
         console.error(err);
@@ -90,6 +112,7 @@ function App() {
           <ItemModal
             item={selectedCard}
             onClose={() => handleCloseItemModal(setSelectedCard)}
+            onDeleteCard={handleDeleteCard}
           />
         )}
       </CurrentTemperatureUnitContext.Provider>
