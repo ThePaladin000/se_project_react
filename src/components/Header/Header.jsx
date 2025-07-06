@@ -14,7 +14,9 @@ function Header({ city, onAddGarmentClick }) {
     <header className="header">
       <nav className="header__nav">
         <div className="header__info">
-          <img src={logo} alt="logo" className="header__logo" />
+          <Link to="/">
+            <img src={logo} alt="logo" className="header__logo" />
+          </Link>
           <p className="header__text">
             {currentDate}, {city}
           </p>
