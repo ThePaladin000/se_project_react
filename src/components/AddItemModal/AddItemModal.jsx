@@ -1,19 +1,24 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./AddItemModal.css";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import GarmentChildren from "../Forms/GarmentChildren";
+import { useForm } from "../../hooks/useForm";
 
 export default function AddItemModal({ isOpen, onClose, onAddGarment }) {
-  const [name, setName] = useState("");
+  const { values, handleChange, setValues } = useForm({});
+
   const [imageUrl, setImageUrl] = useState("");
   const [weather, setWeather] = useState("");
 
+  useEffect(() => {
+    setValues({ name: "" });
+    setImageUrl("");
+    setWeather("hot");
+  }, [isOpen, setValues]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    onAddGarment({ name, imageUrl, weather });
-    setName("");
-    setImageUrl("");
-    setWeather("");
+    onAddGarment({ name: values.name, imageUrl, weather });
     onClose();
   };
 
@@ -27,8 +32,8 @@ export default function AddItemModal({ isOpen, onClose, onAddGarment }) {
       onSubmit={handleSubmit}
     >
       <GarmentChildren
-        name={name}
-        setName={setName}
+        name={values.name}
+        setName={handleChange}
         imageUrl={imageUrl}
         setImageUrl={setImageUrl}
         weather={weather}

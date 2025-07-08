@@ -8,9 +8,6 @@ export default function GarmentChildren({
   weather,
   setWeather,
 }) {
-  const handleNameChange = (e) => {
-    setName(e.target.value);
-  };
   const handleImageUrlChange = (e) => {
     setImageUrl(e.target.value);
   };
@@ -28,7 +25,7 @@ export default function GarmentChildren({
           className="modal__input"
           placeholder="Name"
           value={name}
-          onChange={handleNameChange}
+          onChange={setName}
           required
         />
       </label>

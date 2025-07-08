@@ -35,9 +35,14 @@ function App() {
   };
 
   const handleAddGarment = (item) => {
-    postItem(item);
-    setClothingItems((prev) => [...prev, { ...item, _id: v4() }]);
-    setIsOpen(false);
+    postItem(item)
+      .then(() => {
+        setClothingItems((prev) => [{ ...item, _id: v4() }, ...prev]);
+        setIsOpen(false);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   const handleDeleteCard = (card) => {

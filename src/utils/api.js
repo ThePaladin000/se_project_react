@@ -1,9 +1,15 @@
 const baseUrl = "http://localhost:3001/items";
 
+export const handleResponse = async (res) => {
+  if (!res.ok) {
+    throw new Error(`Error: ${res.status}`);
+  }
+  return res.json();
+};
+
 export const getItems = async () => {
   const response = await fetch(baseUrl);
-  const data = await response.json();
-  return data;
+  return handleResponse(response);
 };
 
 export const postItem = async (item) => {
@@ -14,14 +20,12 @@ export const postItem = async (item) => {
     },
     body: JSON.stringify(item),
   });
-  const data = await response.json();
-  return data;
+  return handleResponse(response);
 };
 
 export const deleteItem = async (id) => {
   const response = await fetch(`${baseUrl}/${id}`, {
     method: "DELETE",
   });
-  const data = await response.json();
-  return data;
+  return handleResponse(response);
 };

@@ -1,11 +1,12 @@
 import { API_KEY } from "./constants";
 import { getTimeOfDay } from "./utils";
+import { handleResponse } from "./api";
 
 export const getWeather = async (location) => {
   const response = await fetch(
     `https://api.openweathermap.org/data/3.0/onecall?lat=${location.latitude}&lon=${location.longitude}&units=imperial&appid=${API_KEY}`
   );
-  const data = await response.json();
+  const data = await handleResponse(response);
 
   const weatherString = data.current.weather[0].main;
   const weather = weatherString.toLowerCase();
