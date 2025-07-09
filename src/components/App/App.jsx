@@ -11,7 +11,6 @@ import { getWeather } from "../../utils/weatherApi";
 import { location } from "../../utils/constants";
 import { getItems, postItem, deleteItem } from "../../utils/api";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
-import { v4 } from "uuid";
 import Profile from "../Profile/Profile";
 
 const placeholderWeather = {
@@ -36,8 +35,8 @@ function App() {
 
   const handleAddGarment = (item) => {
     postItem(item)
-      .then(() => {
-        setClothingItems((prev) => [{ ...item, _id: v4() }, ...prev]);
+      .then((newItem) => {
+        setClothingItems((prev) => [newItem, ...prev]);
         setIsOpen(false);
       })
       .catch((err) => {
