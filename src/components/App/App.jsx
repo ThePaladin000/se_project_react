@@ -57,15 +57,18 @@ function App() {
     setSelectedCard(null);
   };
 
-  useEffect(() => {
-    getWeather(location)
-      .then((weather) => {
-        setWeather(weather);
-        setWeatherIsLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+  useEffect((weather) => {
+    if (Object.keys(weather).length === 0) {
+      getWeather(location)
+        .then((weather) => {
+          setWeather(weather);
+          setWeatherIsLoading(false);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+
     getItems()
       .then((items) => {
         setClothingItems(items);
