@@ -5,10 +5,10 @@ import GarmentChildren from "../Forms/GarmentChildren";
 import { useForm } from "../../hooks/useForm";
 
 export default function AddItemModal({ isOpen, onClose, onAddGarment }) {
-  const { values, handleChange, setValues } = useForm({});
+  const { values, handleChange, setValues } = useForm({ name: "" });
 
   const [imageUrl, setImageUrl] = useState("");
-  const [weather, setWeather] = useState("");
+  const [weather, setWeather] = useState("hot");
 
   useEffect(() => {
     setValues({ name: "" });

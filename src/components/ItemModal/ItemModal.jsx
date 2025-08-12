@@ -1,10 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import "./ItemModal.css";
 import closeIcon from "../../assets/close.svg";
 import ConfirmDeleteModal from "../ConfirmDeleteModal/ConfirmDeleteModal";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 function ItemModal({ item, onClose, onDeleteCard }) {
   const [isConfirmDeleteOpen, setIsConfirmDeleteOpen] = useState(false);
+  const currentUser = useContext(CurrentUserContext);
+
+  const isOwn = item?.owner === currentUser?._id;
 
   useEffect(() => {
     const escListener = (e) => {
@@ -41,14 +45,16 @@ function ItemModal({ item, onClose, onDeleteCard }) {
             </p>
           </div>
           <div className="item-modal__button">
-            <button
-              className="item-modal__button-delete"
-              onClick={() => {
-                setIsConfirmDeleteOpen(true);
-              }}
-            >
-              Delete item
-            </button>
+            {isOwn && (
+              <button
+                className="item-modal__button-delete"
+                onClick={() => {
+                  setIsConfirmDeleteOpen(true);
+                }}
+              >
+                Delete item
+              </button>
+            )}
           </div>
         </div>
       </div>

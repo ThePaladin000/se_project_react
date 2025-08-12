@@ -98,12 +98,13 @@
 
 .modal__submit-button {
   margin-top: 20px;
+  text-wrap: nowrap;
   padding: 10px;
   background-color: rgba(0, 0, 0, 1);
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  width: 124px;
+  width: 150px;
 }
 
 .modal__submit-button:hover {
