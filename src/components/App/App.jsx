@@ -86,10 +86,11 @@ function App() {
         localStorage.setItem("jwt", res.token);
         setIsLoggedIn(true);
         setIsRegisterModalOpen(false);
-        return checkToken(res.token);
+        return Promise.all([checkToken(res.token), getItems(res.token)]);
       })
-      .then((userData) => {
+      .then(([userData, items]) => {
         setCurrentUser(userData);
+        setClothingItems(items);
       })
       .catch((err) => {
         console.error(err);
@@ -102,10 +103,11 @@ function App() {
         localStorage.setItem("jwt", res.token);
         setIsLoggedIn(true);
         setIsLoginModalOpen(false);
-        return checkToken(res.token);
+        return Promise.all([checkToken(res.token), getItems(res.token)]);
       })
-      .then((userData) => {
+      .then(([userData, items]) => {
         setCurrentUser(userData);
+        setClothingItems(items);
       })
       .catch((err) => {
         console.error(err);
@@ -116,6 +118,7 @@ function App() {
     localStorage.removeItem("jwt");
     setCurrentUser(null);
     setIsLoggedIn(false);
+    setClothingItems([]);
   };
 
   const handleUpdateProfile = ({ name, avatar }) => {
@@ -160,26 +163,31 @@ function App() {
         });
     }
 
-    getItems()
-      .then((items) => {
-        setClothingItems(items);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, [weather]);
+    if (isLoggedIn) {
+      const token = localStorage.getItem("jwt");
+      getItems(token)
+        .then((items) => {
+          setClothingItems(items);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  }, [weather, isLoggedIn]);
 
   useEffect(() => {
     const token = localStorage.getItem("jwt");
     if (token) {
-      checkToken(token)
-        .then((userData) => {
+      Promise.all([checkToken(token), getItems(token)])
+        .then(([userData, items]) => {
           setCurrentUser(userData);
           setIsLoggedIn(true);
+          setClothingItems(items);
         })
         .catch((err) => {
           console.error("Token check failed:", err);
           localStorage.removeItem("jwt");
+          setClothingItems([]);
         });
     }
   }, []);

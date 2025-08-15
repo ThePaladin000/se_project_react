@@ -31,6 +31,7 @@
   z-index: 2;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
+  transform: translateX(0);
 }
 
 .toggle-switch__text {
@@ -47,7 +48,6 @@
   justify-content: center;
   pointer-events: none;
   transition: color 0.3s;
-  mix-blend-mode: difference;
 }
 
 .toggle-switch__text_F {
@@ -58,16 +58,13 @@
   right: 5px;
 }
 
-.toggle-switch__slider {
-  transform: translateX(0);
-}
-
 .toggle-switch__checkbox:checked ~ .toggle-switch__slider {
   transform: translateX(28px);
 }
 
 .toggle-switch:hover
-  .toggle-switch__slider:not(.toggle-switch__slider_checked) {
+  .toggle-switch__checkbox:not(:checked)
+  ~ .toggle-switch__slider {
   transform: translateX(2px);
 }
 
@@ -77,5 +74,4 @@
 
 .toggle-switch__text_color_white {
   color: white;
-  mix-blend-mode: normal;
 }

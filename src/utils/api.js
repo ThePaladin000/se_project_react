@@ -8,8 +8,15 @@ export const handleResponse = async (res) => {
   return res.json();
 };
 
-export const getItems = async () => {
-  const response = await fetch(`${baseUrl}/items`);
+export const getItems = async (token) => {
+  const headers = {};
+  if (token) {
+    headers.authorization = `Bearer ${token}`;
+  }
+
+  const response = await fetch(`${baseUrl}/items`, {
+    headers,
+  });
   return handleResponse(response);
 };
 

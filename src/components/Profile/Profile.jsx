@@ -1,5 +1,7 @@
 import SideBar from "../SideBar/SideBar";
 import ClothesSection from "../ClothesSection/ClothesSection";
+import { useContext } from "react";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 import "./Profile.css";
 
 export default function Profile({
@@ -10,6 +12,10 @@ export default function Profile({
   onLogout,
   onEditProfile,
 }) {
+  const currentUser = useContext(CurrentUserContext);
+
+  const userItems = items.filter((item) => item.owner === currentUser._id);
+
   return (
     <div className="profile">
       <SideBar
@@ -20,7 +26,7 @@ export default function Profile({
       <ClothesSection
         className="profile__clothes-section"
         onAddGarmentClick={onAddGarmentClick}
-        items={items}
+        items={userItems}
         onCardClick={onCardClick}
         onCardLike={onCardLike}
       />
