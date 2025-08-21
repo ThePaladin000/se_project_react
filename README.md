@@ -69,6 +69,7 @@
 
 - Node.js (v16 or higher)
 - npm or yarn package manager
+- Deployed the [Express/MongoDB](https://github.com/ThePaladin000/se_project_express) backend
 
 ### Quick Start
 
