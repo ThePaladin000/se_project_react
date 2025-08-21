@@ -16,6 +16,8 @@
   text-align: left;
   background-color: rgba(255, 255, 255, 1);
   border-radius: 10px;
+  max-width: 498px;
+  max-height: 610px;
 }
 
 .item-modal__close {
@@ -40,6 +42,8 @@
 
 .item-modal__image {
   border-radius: 10px;
+  max-width: 498px;
+  max-height: 610px;
 }
 
 .item-modal__content {

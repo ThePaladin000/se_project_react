@@ -1,47 +1,28 @@
-import { useEffect, useState, useContext } from "react";
+import { useState, useContext } from "react";
 import "./ItemModal.css";
-import closeIcon from "../../assets/close.svg";
+import Modal from "../Modal/Modal";
 import ConfirmDeleteModal from "../ConfirmDeleteModal/ConfirmDeleteModal";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
-function ItemModal({ item, onClose, onDeleteCard }) {
+function ItemModal({ item, onClose, onDeleteCard, isLoading }) {
   const [isConfirmDeleteOpen, setIsConfirmDeleteOpen] = useState(false);
   const currentUser = useContext(CurrentUserContext);
 
   const isOwn = item?.owner === currentUser?._id;
 
-  useEffect(() => {
-    const escListener = (e) => {
-      if (e.key === "Escape") {
-        onClose();
-      }
-    };
-    document.addEventListener("keydown", escListener);
-
-    return () => {
-      document.removeEventListener("keydown", escListener);
-    };
-  }, [onClose]);
-
   return (
-    <div className="item-modal" onClick={onClose}>
-      <div
-        className="item-modal__container"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <button className="item-modal__close" onClick={onClose}>
-          <img src={closeIcon} alt="close" />
-        </button>
+    <>
+      <Modal name="item" onClose={onClose} isOpen={!!item}>
         <img
-          src={item.imageUrl}
-          alt={item.name}
+          src={item?.imageUrl}
+          alt={item?.name}
           className="item-modal__image"
         />
         <div className="item-modal__content">
           <div className="item-modal__caption">
-            <p className="item-modal__caption-name">{item.name}</p>
+            <p className="item-modal__caption-name">{item?.name}</p>
             <p className="item-modal__caption-weather">
-              Weather: {item.weather}
+              Weather: {item?.weather}
             </p>
           </div>
           <div className="item-modal__button">
@@ -57,7 +38,7 @@ function ItemModal({ item, onClose, onDeleteCard }) {
             )}
           </div>
         </div>
-      </div>
+      </Modal>
       {isConfirmDeleteOpen && (
         <ConfirmDeleteModal
           item={item}
@@ -66,9 +47,10 @@ function ItemModal({ item, onClose, onDeleteCard }) {
             setIsConfirmDeleteOpen(false);
           }}
           onClose={() => setIsConfirmDeleteOpen(false)}
+          isLoading={isLoading}
         />
       )}
-    </div>
+    </>
   );
 }
 

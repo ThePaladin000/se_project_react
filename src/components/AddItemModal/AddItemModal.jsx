@@ -1,24 +1,32 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import "./AddItemModal.css";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import GarmentChildren from "../Forms/GarmentChildren";
 import { useForm } from "../../hooks/useForm";
 
-export default function AddItemModal({ isOpen, onClose, onAddGarment }) {
-  const { values, handleChange, setValues } = useForm({ name: "" });
-
-  const [imageUrl, setImageUrl] = useState("");
-  const [weather, setWeather] = useState("hot");
+export default function AddItemModal({
+  isOpen,
+  onClose,
+  onAddGarment,
+  isLoading,
+}) {
+  const { values, handleChange, setValues } = useForm({
+    name: "",
+    imageUrl: "",
+    weather: "hot",
+  });
 
   useEffect(() => {
-    setValues({ name: "" });
-    setImageUrl("");
-    setWeather("hot");
+    setValues({ name: "", imageUrl: "", weather: "hot" });
   }, [isOpen, setValues]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onAddGarment({ name: values.name, imageUrl, weather });
+    onAddGarment({
+      name: values.name,
+      imageUrl: values.imageUrl,
+      weather: values.weather,
+    });
     onClose();
   };
 
@@ -30,14 +38,13 @@ export default function AddItemModal({ isOpen, onClose, onAddGarment }) {
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
+      isLoading={isLoading}
     >
       <GarmentChildren
         name={values.name}
-        setName={handleChange}
-        imageUrl={imageUrl}
-        setImageUrl={setImageUrl}
-        weather={weather}
-        setWeather={setWeather}
+        imageUrl={values.imageUrl}
+        weather={values.weather}
+        handleChange={handleChange}
       />
     </ModalWithForm>
   );

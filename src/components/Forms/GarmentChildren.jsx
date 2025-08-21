@@ -2,19 +2,10 @@ import "./GarmentChildren.css";
 
 export default function GarmentChildren({
   name,
-  setName,
   imageUrl,
-  setImageUrl,
   weather,
-  setWeather,
+  handleChange,
 }) {
-  const handleImageUrlChange = (e) => {
-    setImageUrl(e.target.value);
-  };
-  const handleWeatherChange = (e) => {
-    setWeather(e.target.value);
-  };
-
   return (
     <>
       <label className="modal__label">
@@ -25,7 +16,7 @@ export default function GarmentChildren({
           className="modal__input"
           placeholder="Name"
           value={name}
-          onChange={setName}
+          onChange={handleChange}
           required
         />
       </label>
@@ -38,7 +29,7 @@ export default function GarmentChildren({
           className="modal__input"
           placeholder="Image URL"
           value={imageUrl}
-          onChange={handleImageUrlChange}
+          onChange={handleChange}
           required
         />
       </label>
@@ -52,7 +43,7 @@ export default function GarmentChildren({
               value="hot"
               name="weather"
               className="modal__radio-input"
-              onChange={handleWeatherChange}
+              onChange={handleChange}
               checked={weather === "hot"}
               required
             />
@@ -68,7 +59,7 @@ export default function GarmentChildren({
               value="warm"
               name="weather"
               className="modal__radio-input"
-              onChange={handleWeatherChange}
+              onChange={handleChange}
               checked={weather === "warm"}
               required
             />
@@ -84,7 +75,7 @@ export default function GarmentChildren({
               value="cold"
               name="weather"
               className="modal__radio-input"
-              onChange={handleWeatherChange}
+              onChange={handleChange}
               checked={weather === "cold"}
               required
             />

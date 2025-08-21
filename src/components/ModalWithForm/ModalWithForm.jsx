@@ -1,6 +1,5 @@
-import useModalClose from "../../hooks/useModalClose";
+import Modal from "../Modal/Modal";
 import "./ModalWithForm.css";
-import closeIcon from "../../assets/close.svg";
 
 function ModalWithForm({
   children,
@@ -10,29 +9,36 @@ function ModalWithForm({
   onClose,
   isOpen,
   onSubmit,
+  isLoading = false,
+  secondBtnText,
+  onSecondBtnClick,
 }) {
-  useModalClose(isOpen, onClose);
-
   return (
-    <div
-      className={`modal modal_type_${name}${isOpen ? " modal__visible" : ""}`}
-      onClick={isOpen ? onClose : undefined}
-      role="dialog"
-      aria-modal="true"
-    >
-      <div className="modal__container" onClick={(e) => e.stopPropagation()}>
-        <button type="button" className="modal__close" onClick={onClose}>
-          <img src={closeIcon} alt="close" />
-        </button>
-        <h2 className="modal__title">{title}</h2>
-        <form className="modal__form" name={name} onSubmit={onSubmit}>
-          {children}
-          <button type="submit" className="modal__submit-button">
-            {buttonText}
+    <Modal name={name} onClose={onClose} isOpen={isOpen}>
+      <h2 className="modal__title">{title}</h2>
+      <form className="modal__form" name={name} onSubmit={onSubmit}>
+        {children}
+        <div className="modal__button-container">
+          <button
+            type="submit"
+            className="modal__submit-button"
+            disabled={isLoading}
+          >
+            {isLoading ? "Saving..." : buttonText}
           </button>
-        </form>
-      </div>
-    </div>
+          {secondBtnText && (
+            <button
+              type="button"
+              className="modal__second-button"
+              onClick={onSecondBtnClick}
+              disabled={isLoading}
+            >
+              {secondBtnText}
+            </button>
+          )}
+        </div>
+      </form>
+    </Modal>
   );
 }
 

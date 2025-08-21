@@ -3,7 +3,12 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useForm } from "../../hooks/useForm";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
-export default function EditProfileModal({ isOpen, onClose, onUpdateProfile }) {
+export default function EditProfileModal({
+  isOpen,
+  onClose,
+  onUpdateProfile,
+  isLoading,
+}) {
   const currentUser = useContext(CurrentUserContext);
   const { values, handleChange, setValues } = useForm({ name: "", avatar: "" });
 
@@ -29,6 +34,7 @@ export default function EditProfileModal({ isOpen, onClose, onUpdateProfile }) {
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
+      isLoading={isLoading}
     >
       <label className="modal__label">
         Name
