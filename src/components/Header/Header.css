@@ -110,6 +110,7 @@
 
 .header__auth-button {
   background-color: transparent;
+  border: none;
   border-radius: 4px;
   padding: 8px 16px;
   font-size: 16px;
@@ -117,4 +118,15 @@
   cursor: pointer;
   transition: all 0.3s ease;
   color: rgba(0, 0, 0, 1);
+  outline: none;
+}
+
+.header__auth-button:hover {
+  border: none;
+  outline: none;
+}
+
+.header__auth-button:focus {
+  border: none;
+  outline: none;
 }
