@@ -48,12 +48,22 @@ function App() {
   const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
+  const [loginError, setLoginError] = useState("");
+  const [registerError, setRegisterError] = useState("");
 
-  function handleSubmit(request) {
+  function handleSubmit(request, errorSetter) {
     setIsLoading(true);
+    if (errorSetter) {
+      errorSetter(""); // Clear previous errors
+    }
     request()
       .then(handleCloseModal)
-      .catch(console.error)
+      .catch((error) => {
+        console.error(error);
+        if (errorSetter) {
+          errorSetter(error.message || "An error occurred. Please try again.");
+        }
+      })
       .finally(() => setIsLoading(false));
   }
 
@@ -62,6 +72,8 @@ function App() {
     setIsRegisterModalOpen(false);
     setIsLoginModalOpen(false);
     setIsEditProfileOpen(false);
+    setLoginError("");
+    setRegisterError("");
   };
 
   const handleToggleAuthModal = () => {
@@ -80,7 +92,7 @@ function App() {
         setClothingItems((prev) => [newItem, ...prev]);
       });
     };
-    handleSubmit(makeRequest);
+    handleSubmit(makeRequest, null);
   };
 
   const handleDeleteCard = (card) => {
@@ -93,7 +105,7 @@ function App() {
         );
       });
     };
-    handleSubmit(makeRequest);
+    handleSubmit(makeRequest, null);
   };
 
   const handleRegister = (formData) => {
@@ -112,7 +124,7 @@ function App() {
           setClothingItems(items);
         });
     };
-    handleSubmit(makeRequest);
+    handleSubmit(makeRequest, setRegisterError);
   };
 
   const handleLogin = (formData) => {
@@ -128,7 +140,7 @@ function App() {
           setClothingItems(items);
         });
     };
-    handleSubmit(makeRequest);
+    handleSubmit(makeRequest, setLoginError);
   };
 
   const handleLogout = () => {
@@ -146,7 +158,7 @@ function App() {
         setCurrentUser(updatedUser);
       });
     };
-    handleSubmit(makeRequest);
+    handleSubmit(makeRequest, null);
   };
 
   const handleCardLike = ({ id, isLiked }) => {
@@ -285,21 +297,19 @@ function App() {
           )}
           <RegisterModal
             isOpen={isRegisterModalOpen}
-            onClose={() => {
-              setIsRegisterModalOpen(false);
-            }}
+            onClose={handleCloseModal}
             onRegister={handleRegister}
             isLoading={isLoading}
             onToggleModal={handleToggleAuthModal}
+            error={registerError}
           />
           <LoginModal
             isOpen={isLoginModalOpen}
-            onClose={() => {
-              setIsLoginModalOpen(false);
-            }}
+            onClose={handleCloseModal}
             onLogin={handleLogin}
             isLoading={isLoading}
             onToggleModal={handleToggleAuthModal}
+            error={loginError}
           />
           <EditProfileModal
             isOpen={isEditProfileOpen}

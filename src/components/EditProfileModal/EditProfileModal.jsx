@@ -10,7 +10,17 @@ export default function EditProfileModal({
   isLoading,
 }) {
   const currentUser = useContext(CurrentUserContext);
-  const { values, handleChange, setValues } = useForm({ name: "", avatar: "" });
+  const {
+    values,
+    errors,
+    focused,
+    handleChange,
+    handleBlur,
+    setValues,
+    validateForm,
+    resetForm,
+    isValid,
+  } = useForm({ name: "", avatar: "" });
 
   useEffect(() => {
     if (isOpen && currentUser) {
@@ -18,12 +28,16 @@ export default function EditProfileModal({
         name: currentUser.name || "",
         avatar: currentUser.avatar || "",
       });
+    } else if (!isOpen) {
+      resetForm();
     }
-  }, [isOpen, currentUser, setValues]);
+  }, [isOpen, currentUser, setValues, resetForm]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onUpdateProfile({ name: values.name, avatar: values.avatar });
+    if (validateForm()) {
+      onUpdateProfile({ name: values.name, avatar: values.avatar });
+    }
   };
 
   return (
@@ -35,20 +49,27 @@ export default function EditProfileModal({
       onClose={onClose}
       onSubmit={handleSubmit}
       isLoading={isLoading}
+      isValid={isValid}
     >
       <label className="modal__label">
         Name
         <input
           type="text"
           name="name"
-          className="modal__input"
+          className={`modal__input ${
+            errors.name && focused.name ? "modal__input--error" : ""
+          }`}
           value={values.name}
           onChange={handleChange}
+          onBlur={handleBlur}
           placeholder="Your name"
           minLength="2"
           maxLength="30"
           required
         />
+        {errors.name && focused.name && (
+          <span className="modal__error">{errors.name}</span>
+        )}
       </label>
 
       <label className="modal__label">
@@ -56,12 +77,18 @@ export default function EditProfileModal({
         <input
           type="url"
           name="avatar"
-          className="modal__input"
+          className={`modal__input ${
+            errors.avatar && focused.avatar ? "modal__input--error" : ""
+          }`}
           value={values.avatar}
           onChange={handleChange}
+          onBlur={handleBlur}
           placeholder="https://example.com/avatar.jpg"
           required
         />
+        {errors.avatar && focused.avatar && (
+          <span className="modal__error">{errors.avatar}</span>
+        )}
       </label>
     </ModalWithForm>
   );

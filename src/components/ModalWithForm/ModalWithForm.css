@@ -39,10 +39,23 @@
   font-size: 16px;
   outline: none;
   background: transparent;
+  transition: border-color 0.3s ease;
 }
 
 .modal__input::placeholder {
   color: #666;
+}
+
+.modal__input:focus {
+  border-bottom-color: #007bff;
+}
+
+.modal__input--error {
+  border-bottom-color: #dc3545;
+}
+
+.modal__input--error:focus {
+  border-bottom-color: #dc3545;
 }
 
 .modal__radio-title {
@@ -140,4 +153,21 @@
 
 .modal__radio-input:checked::after {
   transform: translate(-50%, -50%) scale(1);
+}
+
+.modal__error {
+  color: #dc3545;
+  font-size: 12px;
+  margin-top: 4px;
+  min-height: 16px;
+  display: block;
+}
+
+.modal__submit-button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.modal__submit-button:disabled:hover {
+  background-color: #6c757d;
 }

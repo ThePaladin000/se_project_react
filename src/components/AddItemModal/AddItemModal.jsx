@@ -10,24 +10,35 @@ export default function AddItemModal({
   onAddGarment,
   isLoading,
 }) {
-  const { values, handleChange, setValues } = useForm({
+  const {
+    values,
+    errors,
+    focused,
+    handleChange,
+    handleBlur,
+    validateForm,
+    resetForm,
+    isValid,
+  } = useForm({
     name: "",
     imageUrl: "",
     weather: "hot",
   });
 
   useEffect(() => {
-    setValues({ name: "", imageUrl: "", weather: "hot" });
-  }, [isOpen, setValues]);
+    resetForm();
+  }, [isOpen, resetForm]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onAddGarment({
-      name: values.name,
-      imageUrl: values.imageUrl,
-      weather: values.weather,
-    });
-    onClose();
+    if (validateForm()) {
+      onAddGarment({
+        name: values.name,
+        imageUrl: values.imageUrl,
+        weather: values.weather,
+      });
+      onClose();
+    }
   };
 
   return (
@@ -39,12 +50,16 @@ export default function AddItemModal({
       onClose={onClose}
       onSubmit={handleSubmit}
       isLoading={isLoading}
+      isValid={isValid}
     >
       <GarmentChildren
         name={values.name}
         imageUrl={values.imageUrl}
         weather={values.weather}
+        errors={errors}
+        focused={focused}
         handleChange={handleChange}
+        handleBlur={handleBlur}
       />
     </ModalWithForm>
   );

@@ -12,6 +12,7 @@ function ModalWithForm({
   isLoading = false,
   secondBtnText,
   onSecondBtnClick,
+  isValid = true,
 }) {
   return (
     <Modal name={name} onClose={onClose} isOpen={isOpen}>
@@ -22,7 +23,7 @@ function ModalWithForm({
           <button
             type="submit"
             className="modal__submit-button"
-            disabled={isLoading}
+            disabled={isLoading || !isValid}
           >
             {isLoading ? "Saving..." : buttonText}
           </button>

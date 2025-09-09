@@ -35,7 +35,7 @@ function ItemModal({ item, onClose, onDeleteCard, isLoading }) {
     <>
       <div
         className="item-modal"
-        onClick={handleOverlay}
+        onMouseDown={handleOverlay}
         role="dialog"
         aria-modal="true"
       >

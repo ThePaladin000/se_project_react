@@ -2,7 +2,13 @@ import "./LoginModal.css";
 import { useForm } from "../../hooks/useForm";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
-const LoginFormInputs = ({ values, handleChange }) => {
+const LoginFormInputs = ({
+  values,
+  errors,
+  focused,
+  handleChange,
+  handleBlur,
+}) => {
   return (
     <>
       <div className="modal__input-group">
@@ -10,36 +16,65 @@ const LoginFormInputs = ({ values, handleChange }) => {
           type="email"
           name="email"
           placeholder="Email"
-          className="modal__input"
+          className={`modal__input ${
+            errors.email && focused.email ? "modal__input--error" : ""
+          }`}
           value={values.email}
           onChange={handleChange}
+          onBlur={handleBlur}
           required
         />
+        {errors.email && focused.email && (
+          <span className="modal__error">{errors.email}</span>
+        )}
       </div>
       <div className="modal__input-group">
         <input
           type="password"
           name="password"
           placeholder="Password"
-          className="modal__input"
+          className={`modal__input ${
+            errors.password && focused.password ? "modal__input--error" : ""
+          }`}
           value={values.password}
           onChange={handleChange}
+          onBlur={handleBlur}
           required
         />
+        {errors.password && focused.password && (
+          <span className="modal__error">{errors.password}</span>
+        )}
       </div>
     </>
   );
 };
 
-const LoginModal = ({ isOpen, onClose, onLogin, isLoading, onToggleModal }) => {
-  const { values, handleChange } = useForm({
+const LoginModal = ({
+  isOpen,
+  onClose,
+  onLogin,
+  isLoading,
+  onToggleModal,
+  error,
+}) => {
+  const {
+    values,
+    errors,
+    focused,
+    handleChange,
+    handleBlur,
+    validateForm,
+    isValid,
+  } = useForm({
     email: "",
     password: "",
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onLogin(values);
+    if (validateForm()) {
+      onLogin(values);
+    }
   };
 
   return (
@@ -53,8 +88,20 @@ const LoginModal = ({ isOpen, onClose, onLogin, isLoading, onToggleModal }) => {
       isLoading={isLoading}
       secondBtnText="or Sign Up"
       onSecondBtnClick={onToggleModal}
+      isValid={isValid}
     >
-      <LoginFormInputs values={values} handleChange={handleChange} />
+      <LoginFormInputs
+        values={values}
+        errors={errors}
+        focused={focused}
+        handleChange={handleChange}
+        handleBlur={handleBlur}
+      />
+      {error && (
+        <div className="modal__error-container">
+          <span className="modal__error modal__error--server">{error}</span>
+        </div>
+      )}
     </ModalWithForm>
   );
 };

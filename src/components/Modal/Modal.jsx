@@ -5,7 +5,7 @@ import closeIcon from "../../assets/close.svg";
 export const Modal = ({ name, onClose, children, isOpen }) => {
   useEffect(() => {
     if (!isOpen) return;
-    
+
     const handleEscape = (e) => {
       if (e.key === "Escape") {
         onClose();
@@ -25,9 +25,9 @@ export const Modal = ({ name, onClose, children, isOpen }) => {
   if (!isOpen) return null;
 
   return (
-    <div 
-      className={`modal modal_type_${name} modal__visible`} 
-      onClick={handleOverlay}
+    <div
+      className={`modal modal_type_${name} modal__visible`}
+      onMouseDown={handleOverlay}
       role="dialog"
       aria-modal="true"
     >
