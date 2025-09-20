@@ -197,16 +197,9 @@ function App() {
 
   useEffect(() => {
     const token = localStorage.getItem("jwt");
-    console.log(
-      "Initial token check useEffect running, token:",
-      token ? "present" : "missing"
-    );
     if (token) {
-      console.log("Checking token and fetching items...");
       Promise.all([checkToken(token), getItems(token)])
         .then(([userData, items]) => {
-          console.log("Token check successful, userData:", userData);
-          console.log("Initial items fetch successful:", items);
           setCurrentUser(userData);
           setIsLoggedIn(true);
           setClothingItems(items);
@@ -216,8 +209,6 @@ function App() {
           localStorage.removeItem("jwt");
           setClothingItems([]);
         });
-    } else {
-      console.log("No token found, user not logged in");
     }
   }, []);
 
