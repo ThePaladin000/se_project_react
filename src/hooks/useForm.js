@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback, useMemo } from "react";
 
 // Validation rules
 const validationRules = {
@@ -39,40 +39,43 @@ export function useForm(inputValues, validationConfig = {}) {
   const [errors, setErrors] = useState({});
   const [focused, setFocused] = useState({});
 
-  const validateField = (name, value) => {
-    const rule = validationRules[name] || validationConfig[name];
-    if (!rule) return "";
+  const validateField = useCallback(
+    (name, value) => {
+      const rule = validationRules[name] || validationConfig[name];
+      if (!rule) return "";
 
-    if (rule.required && (!value || value.trim() === "")) {
-      return `${name.charAt(0).toUpperCase() + name.slice(1)} is required`;
-    }
+      if (rule.required && (!value || value.trim() === "")) {
+        return `${name.charAt(0).toUpperCase() + name.slice(1)} is required`;
+      }
 
-    if (value && rule.minLength && value.length < rule.minLength) {
-      return (
-        rule.message ||
-        `${name.charAt(0).toUpperCase() + name.slice(1)} must be at least ${
-          rule.minLength
-        } characters`
-      );
-    }
+      if (value && rule.minLength && value.length < rule.minLength) {
+        return (
+          rule.message ||
+          `${name.charAt(0).toUpperCase() + name.slice(1)} must be at least ${
+            rule.minLength
+          } characters`
+        );
+      }
 
-    if (value && rule.maxLength && value.length > rule.maxLength) {
-      return (
-        rule.message ||
-        `${name.charAt(0).toUpperCase() + name.slice(1)} must be no more than ${
-          rule.maxLength
-        } characters`
-      );
-    }
+      if (value && rule.maxLength && value.length > rule.maxLength) {
+        return (
+          rule.message ||
+          `${
+            name.charAt(0).toUpperCase() + name.slice(1)
+          } must be no more than ${rule.maxLength} characters`
+        );
+      }
 
-    if (value && rule.pattern && !rule.pattern.test(value)) {
-      return rule.message || `Please enter a valid ${name}`;
-    }
+      if (value && rule.pattern && !rule.pattern.test(value)) {
+        return rule.message || `Please enter a valid ${name}`;
+      }
 
-    return "";
-  };
+      return "";
+    },
+    [validationConfig]
+  );
 
-  const validateForm = () => {
+  const validateForm = useCallback(() => {
     const newErrors = {};
     let isValid = true;
 
@@ -86,46 +89,56 @@ export function useForm(inputValues, validationConfig = {}) {
 
     setErrors(newErrors);
     return isValid;
-  };
+  }, [values, validateField]);
 
-  const handleChange = (event) => {
-    const { value, name } = event.target;
-    const newValues = { ...values, [name]: value };
-    setValues(newValues);
+  const handleChange = useCallback(
+    (event) => {
+      const { value, name } = event.target;
+      const newValues = { ...values, [name]: value };
+      setValues(newValues);
 
-    // Validate field on change if it has been focused
-    if (focused[name]) {
+      // Validate field on change if it has been focused
+      if (focused[name]) {
+        const error = validateField(name, value);
+        setErrors((prev) => ({
+          ...prev,
+          [name]: error,
+        }));
+      }
+    },
+    [values, focused, validateField]
+  );
+
+  const handleBlur = useCallback(
+    (event) => {
+      const { name, value } = event.target;
+      setFocused((prev) => ({ ...prev, [name]: true }));
+
       const error = validateField(name, value);
       setErrors((prev) => ({
         ...prev,
         [name]: error,
       }));
-    }
-  };
+    },
+    [validateField]
+  );
 
-  const handleBlur = (event) => {
-    const { name, value } = event.target;
-    setFocused((prev) => ({ ...prev, [name]: true }));
-
-    const error = validateField(name, value);
-    setErrors((prev) => ({
-      ...prev,
-      [name]: error,
-    }));
-  };
-
-  const resetForm = () => {
+  const resetForm = useCallback(() => {
     setValues(inputValues);
     setErrors({});
     setFocused({});
-  };
+  }, [inputValues]);
 
-  const isFormValid = () => {
+  const isFormValid = useMemo(() => {
     return Object.keys(values).every((name) => {
       const error = validateField(name, values[name]);
       return error === "";
     });
-  };
+  }, [values, validateField]);
+
+  const setValuesCallback = useCallback((newValues) => {
+    setValues(newValues);
+  }, []);
 
   return {
     values,
@@ -133,9 +146,9 @@ export function useForm(inputValues, validationConfig = {}) {
     focused,
     handleChange,
     handleBlur,
-    setValues,
+    setValues: setValuesCallback,
     validateForm,
     resetForm,
-    isValid: isFormValid(),
+    isValid: isFormValid,
   };
 }

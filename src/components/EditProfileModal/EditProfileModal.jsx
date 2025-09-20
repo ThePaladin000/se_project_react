@@ -3,6 +3,8 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useForm } from "../../hooks/useForm";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
+const initialValues = { name: "", avatar: "" };
+
 export default function EditProfileModal({
   isOpen,
   onClose,
@@ -18,9 +20,8 @@ export default function EditProfileModal({
     handleBlur,
     setValues,
     validateForm,
-    resetForm,
     isValid,
-  } = useForm({ name: "", avatar: "" });
+  } = useForm(initialValues);
 
   useEffect(() => {
     if (isOpen && currentUser) {
@@ -28,10 +29,8 @@ export default function EditProfileModal({
         name: currentUser.name || "",
         avatar: currentUser.avatar || "",
       });
-    } else if (!isOpen) {
-      resetForm();
     }
-  }, [isOpen, currentUser, setValues, resetForm]);
+  }, [isOpen, currentUser, setValues]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import Header from "../Header/Header";
@@ -81,9 +81,9 @@ function App() {
     setIsRegisterModalOpen(!isRegisterModalOpen);
   };
 
-  const handleToggleSwitch = () => {
+  const handleToggleSwitch = useCallback(() => {
     setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
-  };
+  }, [currentTemperatureUnit]);
 
   const handleAddGarment = (item) => {
     const makeRequest = () => {
@@ -161,7 +161,7 @@ function App() {
     handleSubmit(makeRequest, null);
   };
 
-  const handleCardLike = ({ id, isLiked }) => {
+  const handleCardLike = useCallback(({ id, isLiked }) => {
     const token = localStorage.getItem("jwt");
     !isLiked
       ? addCardLike(id, token)
@@ -178,25 +178,10 @@ function App() {
             );
           })
           .catch((err) => console.log(err));
-  };
+  }, []);
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      const token = localStorage.getItem("jwt");
-      console.log(
-        "Fetching items for logged in user, token:",
-        token ? "present" : "missing"
-      );
-      getItems(token)
-        .then((items) => {
-          console.log("Successfully fetched items:", items);
-          setClothingItems(items);
-        })
-        .catch((err) => {
-          console.error("Error fetching items:", err);
-        });
-    }
-  }, [isLoggedIn]);
+  // Removed redundant useEffect that was fetching items when isLoggedIn changed
+  // Items are already fetched in the initial token check useEffect
 
   useEffect(() => {
     getWeather(location)
@@ -212,7 +197,10 @@ function App() {
 
   useEffect(() => {
     const token = localStorage.getItem("jwt");
-    console.log("Initial token check, token:", token ? "present" : "missing");
+    console.log(
+      "Initial token check useEffect running, token:",
+      token ? "present" : "missing"
+    );
     if (token) {
       console.log("Checking token and fetching items...");
       Promise.all([checkToken(token), getItems(token)])

@@ -1,8 +1,14 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import "./AddItemModal.css";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import GarmentChildren from "../Forms/GarmentChildren";
 import { useForm } from "../../hooks/useForm";
+
+const initialValues = {
+  name: "",
+  imageUrl: "",
+  weather: "hot",
+};
 
 export default function AddItemModal({
   isOpen,
@@ -19,14 +25,16 @@ export default function AddItemModal({
     validateForm,
     resetForm,
     isValid,
-  } = useForm({
-    name: "",
-    imageUrl: "",
-    weather: "hot",
-  });
+  } = useForm(initialValues);
+
+  const prevIsOpenRef = useRef(false);
 
   useEffect(() => {
-    resetForm();
+    // Only reset form when modal opens (transitions from false to true)
+    if (isOpen && !prevIsOpenRef.current) {
+      resetForm();
+    }
+    prevIsOpenRef.current = isOpen;
   }, [isOpen, resetForm]);
 
   const handleSubmit = (e) => {

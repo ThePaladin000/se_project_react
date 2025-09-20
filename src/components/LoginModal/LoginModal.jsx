@@ -2,6 +2,11 @@ import "./LoginModal.css";
 import { useForm } from "../../hooks/useForm";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
+const initialValues = {
+  email: "",
+  password: "",
+};
+
 const LoginFormInputs = ({
   values,
   errors,
@@ -65,10 +70,7 @@ const LoginModal = ({
     handleBlur,
     validateForm,
     isValid,
-  } = useForm({
-    email: "",
-    password: "",
-  });
+  } = useForm(initialValues);
 
   const handleSubmit = (e) => {
     e.preventDefault();

@@ -2,6 +2,13 @@ import "./RegisterModal.css";
 import { useForm } from "../../hooks/useForm";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
+const initialValues = {
+  name: "",
+  avatar: "",
+  email: "",
+  password: "",
+};
+
 const RegisterFormInputs = ({
   values,
   errors,
@@ -99,12 +106,7 @@ const RegisterModal = ({
     handleBlur,
     validateForm,
     isValid,
-  } = useForm({
-    name: "",
-    avatar: "",
-    email: "",
-    password: "",
-  });
+  } = useForm(initialValues);
 
   const handleSubmit = (e) => {
     e.preventDefault();
