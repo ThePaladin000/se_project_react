@@ -1,4 +1,4 @@
-const baseUrl = "https://api.zeta.zanity.net/";
+const baseUrl = "https://api.zeta.zanity.net";
 
 const handleResponse = async (res) => {
   if (!res.ok) {

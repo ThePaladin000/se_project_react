@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite --open",
     "build": "vite build",
-    "deploy": "npm run build && scp -r ./dist/* gomezjoshuam@34.134.69.150:/var/www/html/frontend/",
+    "deploy": "npm run build && scp -r ./dist/* gomezjoshuam@34.134.69.150:/home/gomezjoshuam/frontend",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "predeploy": "npm run build"
