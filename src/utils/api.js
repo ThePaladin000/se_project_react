@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:3001";
+const baseUrl = "http://api.zeta.zanity.net/";
 
 const handleResponse = async (res) => {
   if (!res.ok) {

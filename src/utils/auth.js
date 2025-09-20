@@ -1,6 +1,6 @@
 import { request } from "./api";
 
-const baseUrl = "http://localhost:3001";
+const baseUrl = "http://api.zeta.zanity.net/";
 
 export const signup = async ({ name, avatar, email, password }) => {
   return request(`${baseUrl}/signup`, {
